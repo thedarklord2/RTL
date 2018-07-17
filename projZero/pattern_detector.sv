@@ -27,12 +27,30 @@ logic  next_state,  state;
 
 
 // reset function
+
+always_comb begin
+
+	next_state = state;
+	case(state)
+	
+	 IDLE: if serial_pattern_i ==   
+
+
+
+
+end
+
+
 always_ff @( posedge clk )
 begin
-	if (rstb == 1'b1) begin
-		next_state <= state;
+	if (rstb == 1'b0) begin
+		state <= IDLE;
+		pattern_detected_o <= 1'b0;
+	end else if (rstb == 1'b1 && enable == 0) begin
+		state <= IDLE;
+		pattern_detected_o <= 1'b0;
 	end else begin
-		next_state <= IDLE;
+		state <= next_state;
 	end
 end
 
