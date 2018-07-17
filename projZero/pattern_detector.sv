@@ -5,9 +5,9 @@
 module pattern_detector (
 	input logic 	clk,
 	input logic	rstb,
-	input logic	serial_pattern_i,
+	input logic	serial_pattern,
 	input logic	enable,
-	input logic	pattern_detected_o
+	input logic	pattern_detected
 );
 
 
@@ -22,13 +22,12 @@ parameter ONE_ONE	 = 6'b100000;
 
 // Internal variables
 logic  next_state,  state;
-
+logic  pattern_detected_i;
 
 // Functionality blocks
 
 
-// reset function
-
+// comb block
 always_comb begin
 
 	next_state = state;
@@ -42,16 +41,18 @@ always_comb begin
 end
 
 
+// Sequential block
 always_ff @( posedge clk )
 begin
 	if (rstb == 1'b0) begin
 		state <= IDLE;
-		pattern_detected_o <= 1'b0;
+		pattern_detected <= 1'b0;
 	end else if (rstb == 1'b1 && enable == 0) begin
 		state <= IDLE;
-		pattern_detected_o <= 1'b0;
+		pattern_detected <= 1'b0;
 	end else begin
 		state <= next_state;
+		pattern_detected <= pattern_detected_i;
 	end
 end
 
