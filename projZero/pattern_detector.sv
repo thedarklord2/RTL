@@ -19,8 +19,8 @@ parameter ONE_ZER	 = 6'b010000;
 parameter ONE_ONE	 = 6'b100000;
 
 // Internal variables
-logic  next_state,  state;
-logic  pattern_detected_i;
+logic  [5:0] 	next_state,  state;
+logic  		pattern_detected_i;
 
 // Functionality blocks
 
@@ -101,6 +101,10 @@ always_comb begin
 			next_state = IDLE;
 			pattern_detected_i = 1'b0;
 		end
+	default:
+		 next_state = IDLE;
+		pattern_detected_i = 1'b0;
+       endcase
 end
 
 // Sequential block
