@@ -1,6 +1,4 @@
-// test comment
 // Output goes high when exactly 2 of the last 3 values are 1
-//
 
 module pattern_detector (
 	input logic 	clk,
@@ -32,17 +30,81 @@ always_comb begin
 
 	next_state = state;
 	case(state)
-	
-	 IDLE: if serial_pattern_i ==   
-
-
-
-
+	 IDLE:  if (serial_pattern == 1'b0)  begin
+			next_state = ZER;
+			pattern_detected_i = 1'b0;
+		end else if (serial_pattern == 1'b1) begin
+			next_state = ONE;
+			pattern_detected_i = 1'b0;
+		end else begin
+			next_state = IDLE;
+			pattern_detected_i = 1'b0;
+		end
+				
+	 ZER:  if (serial_pattern == 1'b0)  begin
+			next_state = ZER_ZER;
+			pattern_detected_i = 1'b0;
+		end else if (serial_pattern == 1'b1) begin
+			next_state = ZER_ONE;
+			pattern_detected_i = 1'b0;
+		end else begin
+			next_state = IDLE;
+			pattern_detected_i = 1'b0;
+		end
+	 ONE:  if (serial_pattern == 1'b0)  begin
+			next_state = ONE_ZER;
+			pattern_detected_i = 1'b0;
+		end else if (serial_pattern == 1'b1) begin
+			next_state = ONE_ONE;
+			pattern_detected_i = 1'b0;
+		end else begin
+			next_state = IDLE;
+			pattern_detected_i = 1'b0;
+		end
+	 ZER_ZER:  if (serial_pattern == 1'b0)  begin
+			next_state = ZER_ZER;
+			pattern_detected_i = 1'b0;
+		end else if (serial_pattern == 1'b1) begin
+			next_state = ZER_ONE;
+			pattern_detected_i = 1'b0;
+		end else begin
+			next_state = IDLE;
+			pattern_detected_i = 1'b0;
+		end
+	 ZER_ONE:  if (serial_pattern == 1'b0)  begin
+			next_state = ONE_ZER;
+			pattern_detected_i = 1'b0;
+		end else if (serial_pattern == 1'b1) begin
+			next_state = ONE_ONE;
+			pattern_detected_i = 1'b1;
+		end else begin
+			next_state = IDLE;
+			pattern_detected_i = 1'b0;
+		end
+	 ONE_ZER:  if (serial_pattern == 1'b0)  begin
+			next_state = ZER_ZER;
+			pattern_detected_i = 1'b0;
+		end else if (serial_pattern == 1'b1) begin
+			next_state = ZER_ONE;
+			pattern_detected_i = 1'b1;
+		end else begin
+			next_state = IDLE;
+			pattern_detected_i = 1'b0;
+		end
+	 ONE_ONE:  if (serial_pattern == 1'b0)  begin
+			next_state = ONE_ZER;
+			pattern_detected_i = 1'b1;
+		end else if (serial_pattern == 1'b1) begin
+			next_state = ONE_ONE;
+			pattern_detected_i = 1'b0;
+		end else begin
+			next_state = IDLE;
+			pattern_detected_i = 1'b0;
+		end
 end
 
-
 // Sequential block
-always_ff @( posedge clk )
+always_ff @( posedge clk or negedge rstb )
 begin
 	if (rstb == 1'b0) begin
 		state <= IDLE;
