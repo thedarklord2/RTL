@@ -1,3 +1,4 @@
+// test comment
 // Output goes high when exactly 2 of the last 3 values are 1
 //
 
