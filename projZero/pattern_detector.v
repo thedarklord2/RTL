@@ -9,17 +9,11 @@ module pattern_detector ( clk,
 );
 
 // Signal directions
-input clk;
-input rstb;		// active low reset
-input serial_pattern;	// Serial pattern input
-input enable;		// Needs to be high for detection to start
-output pattern_detected_o;
-// Port types
-wire clk;
-wire rstb;
-wire serial_pattern;
-wire enable;
-reg pattern_detected_o;
+input  logic clk;
+input  logic rstb;		// active low reset
+input  logic serial_pattern;	// Serial pattern input
+input  logic enable;		// Needs to be high for detection to start
+output logic pattern_detected_o;
 
 // State names
 parameter IDLE 	 	 = 6'b000000;
