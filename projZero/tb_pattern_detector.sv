@@ -3,6 +3,9 @@
 
 module tb_pattern_detector;
 
+// Parameters 
+parameter HALF_TIME_PERIOD = 5;
+
 // Clock and reset
 bit clk, rstb;
 
@@ -23,6 +26,10 @@ pattern_detector U_pattern_detector (
 									);
 
 
+always
+begin
+	#(HALF_TIME_PERIOD) clk = ~clk;
+end
 
 
 // assertion to check pattern_detected is driven low, when enable is not active
