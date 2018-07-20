@@ -55,8 +55,25 @@ begin
 		else 
 			assert ( pattern_detected != 1'b0 ) $error ( "Pattern detected should be low");	
 	end
+	
+	repeat (10) @(negedge clk);
+	$finish;
 end
 
+// #########################################################
+// ################  VCD stuff   ###########################
+// #########################################################
+initial 
+begin
+    // if this is a "+wave" run, it must record all signals
+    if ( $test$plusargs("wave") ) 
+	begin
+        $display("%t: Starting Wave Capture",$time);
+        // levels, instance
+        $vcdpluson   (0, tb_pattern_detector );
+        $vcdplusmemon(0, tb_pattern_detector );
+    end
+end
 
 
 
