@@ -16,9 +16,9 @@ vpath %.v $(DESIGN_HOME)/RTL $(DESIGN_HOME)/TB
 ############### For Verilo (VCS) ################
 #################################################
 
-MODULE_NAME        ?=  ch_4
+MODULE_NAME        ?=  pattern_detector
 
-TEST_MODULE        ?=  ch_4
+TEST_MODULE        ?=  tb_pattern_detector
 
 VLOG_LIST          ?=  filelist
 
