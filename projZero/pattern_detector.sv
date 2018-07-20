@@ -5,7 +5,7 @@ module pattern_detector (
 	input logic	rstb,
 	input logic	serial_pattern,
 	input logic	enable,
-	input logic	pattern_detected
+	output logic	pattern_detected
 );
 
 
