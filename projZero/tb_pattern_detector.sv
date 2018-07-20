@@ -10,10 +10,11 @@ bit clk, rstb;
 bit serial_pattern, enable;
 logic pattern_detected;
 
+
 bit [2:0] three_bit_serial_pattern;
 
 
-U_pattern_detector pattern_detector (
+pattern_detector U_pattern_detector (
 										.clk  ( clk ),
 										.rstb ( rstb ),
 										.serial_pattern (serial_pattern),
@@ -41,25 +42,20 @@ begin
 	rstb = 1'b1;
 	repeat (10) @(negedge clk);
 	
-	for ( int i = 0; i < 10; i++ )
+	// Enable and send data
+	enable = 1'b1;
+	for ( int i = 0; i < 100; i++ )
 	begin
 		serial_pattern = $urandom;					
 		three_bit_serial_pattern = { serial_pattern, three_bit_serial_pattern[2:1] };
 		repeat (1) @(negedge clk);
+
+		if ( !(^three_bit_serial_pattern) && three_bit_serial_pattern != 3'd0 ) 
+			assert ( pattern_detected != 1'b1 ) $error ( "Pattern detected should be high");	
+		else 
+			assert ( pattern_detected != 1'b0 ) $error ( "Pattern detected should be low");	
 	end
-
-	
 end
-
-initial
-
-
-
-
-
-
-
-
 
 
 
