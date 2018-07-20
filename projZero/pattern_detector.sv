@@ -101,9 +101,10 @@ always_comb begin
 			next_state = IDLE;
 			pattern_detected_i = 1'b0;
 		end
-	default:
-		 next_state = IDLE;
-		pattern_detected_i = 1'b0;
+	default: begin
+		 	next_state = IDLE;
+			pattern_detected_i = 1'b0;
+		end
        endcase
 end
 
