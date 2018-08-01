@@ -51,6 +51,14 @@ begin
 	
 	// Enable and send data
 	enable = 1'b1;
+	serial_pattern = $urandom;					
+	three_bit_serial_pattern = { serial_pattern, three_bit_serial_pattern[2:1] };
+	repeat (1) @(negedge clk);
+	
+	serial_pattern = $urandom;					
+	three_bit_serial_pattern = { serial_pattern, three_bit_serial_pattern[2:1] };
+	repeat (1) @(negedge clk);
+	
 	for ( int i = 0; i < 100; i++ )
 	begin
 		serial_pattern = $urandom;					
@@ -58,9 +66,9 @@ begin
 		repeat (1) @(negedge clk);
 
 		if ( !(^three_bit_serial_pattern) && three_bit_serial_pattern != 3'd0 ) 
-			assert ( pattern_detected != 1'b1 ) $error ( "Pattern detected should be high");	
+			EXACT_MATCH: assert ( pattern_detected == 1'b1 ) else $error ( "Pattern detected should be high");	
 		else 
-			assert ( pattern_detected != 1'b0 ) $error ( "Pattern detected should be low");	
+			NOT_EXACT_MATCH: assert ( pattern_detected == 1'b0 ) else $error ( "Pattern detected should be low");	
 	end
 	
 	repeat (10) @(negedge clk);
