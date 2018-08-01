@@ -34,7 +34,7 @@ end
 
 // assertion to check pattern_detected is driven low, when enable is not active
 always@(negedge clk)
-	assert ( (!enable) && pattern_detected ) $error("This shouldn't happen. Pattern detector can't work when we don't enable it"); 
+	BASIC_CHECK: assert  (!( (!enable) && pattern_detected )) else $display("This shouldn't happen. Pattern detector can't work when we don't enable it enable = %d, pattern_detected = %d", enable, pattern_detected ); 
 
 
 initial
